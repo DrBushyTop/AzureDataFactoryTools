@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ADFName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Data Factory"
+      }
+    },
+    "environment": {
+      "type": "string",
+      "metadata": {
+        "description": "Environment to decide whether to attach repository"
+      }
+    }
+  },
+  "variables": {
+    "factoryConfig": {
+      "repoConfiguration": {
+        "accountName": "myAzDOOrganization",
+        "projectName": "myAzDOProject",
+        "repositoryName": "myADFRepo",
+        "collaborationBranch": "master",
+        "rootFolder": "/ADFCode",
+        // See reference for Git, this is only for Azure DevOps
+        "type": "FactoryVSTSConfiguration"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.DataFactory/factories",
+      "apiVersion": "2018-06-01",
+      "name": "[parameters('ADFName')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": "[if(equals(parameters('environment'), 'dev'), variables('factoryConfig'), '')]"
+    }
+  ],
+  "outputs": {
+  }
+}
