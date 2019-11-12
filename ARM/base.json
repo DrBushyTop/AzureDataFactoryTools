@@ -23,7 +23,6 @@
         "repositoryName": "myADFRepo",
         "collaborationBranch": "master",
         "rootFolder": "/ADFCode",
-        // See reference for Git, this is only for Azure DevOps
         "type": "FactoryVSTSConfiguration"
       }
     }
